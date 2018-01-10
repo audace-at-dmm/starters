@@ -24,7 +24,9 @@ package com.raywenderlich.galacticon
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
+import kotlinx.android.synthetic.main.activity_main.*
 import java.io.IOException
 import java.util.*
 
@@ -32,6 +34,7 @@ class MainActivity : AppCompatActivity(), ImageRequester.ImageRequesterResponse 
 
   private var photosList: ArrayList<Photo> = ArrayList()
   private lateinit var imageRequester: ImageRequester
+  private lateinit var linearLayoutManager: LinearLayoutManager
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
     menuInflater.inflate(R.menu.menu_main, menu)
@@ -41,6 +44,8 @@ class MainActivity : AppCompatActivity(), ImageRequester.ImageRequesterResponse 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
+    linearLayoutManager = LinearLayoutManager(this)
+    recyclerView.layoutManager = linearLayoutManager
 
     imageRequester = ImageRequester(this)
   }
