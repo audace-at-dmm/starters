@@ -29,6 +29,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
+import android.os.Bundle
+import android.support.v7.widget.GridLayoutManager
+
 import com.raywenderlich.alltherages.databinding.RecyclerItemRageComicBinding
 
 
@@ -69,6 +72,37 @@ class RageComicListFragment : Fragment() {
     override fun getItemCount(): Int {
       return names.size
     }
+  }
+
+  override fun onAttach(context: Context?) {
+    super.onAttach(context)
+
+    // Get rage face names and descriptions.
+    val resources = context!!.resources
+    names = resources.getStringArray(R.array.names)
+    descriptions = resources.getStringArray(R.array.descriptions)
+    urls = resources.getStringArray(R.array.urls)
+
+    // Get rage face images.
+    val typedArray = resources.obtainTypedArray(R.array.images)
+    val imageCount = names.size
+    imageResIds = IntArray(imageCount)
+    for (i in 0..imageCount - 1) {
+      imageResIds[i] = typedArray.getResourceId(i, 0)
+    }
+    typedArray.recycle()
+  }
+
+  override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
+                            savedInstanceState: Bundle?): View? {
+
+    val view: View = inflater!!.inflate(R.layout.fragment_rage_comic_list, container,
+            false)
+    val activity = activity
+    val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view) as RecyclerView
+    recyclerView.layoutManager = GridLayoutManager(activity, 2)
+    recyclerView.adapter = RageComicAdapter(activity)
+    return view
   }
 
   internal inner class ViewHolder constructor(itemView: View,

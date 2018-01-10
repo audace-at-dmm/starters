@@ -28,10 +28,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
-//1
+//1 RageComicDetailsFragment is a subclass of fragment
 class RageComicDetailsFragment : Fragment() {
 
-  //2
+  //2 Provides a method for creatign new instances of the fragment, a factory method
   companion object {
 
     fun newInstance(): RageComicDetailsFragment {
@@ -39,7 +39,7 @@ class RageComicDetailsFragment : Fragment() {
     }
   }
 
-  //3
+  //3 Creates view hierarcy controlled by the fragment
   override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                             savedInstanceState: Bundle?): View? {
     return inflater?.inflate(R.layout.fragment_rage_comic_details, container, false)
