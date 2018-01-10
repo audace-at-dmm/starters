@@ -52,7 +52,17 @@ class ImageRequester(listeningActivity: Activity) {
     client = OkHttpClient()
   }
 
+
+  fun printMessage(message: String): Int {
+    System.out.println("================")
+    System.out.println(message)
+    System.out.println("=================")
+    return 1
+  }
+
   fun getPhoto() {
+
+    printMessage("Getting a new photo")
 
     val date = dateFormat.format(calendar.time)
 
@@ -69,11 +79,14 @@ class ImageRequester(listeningActivity: Activity) {
 
     client.newCall(request).enqueue(object : Callback {
       override fun onFailure(call: Call, e: IOException) {
+
+        printMessage("Failed to make new call ")
         isLoadingData = false
         e.printStackTrace()
       }
 
       override fun onResponse(call: Call, response: Response) {
+        System.out.println("=============== Received photo response ===============")
 
         try {
           val photoJSON = JSONObject(response.body()!!.string())
@@ -90,6 +103,7 @@ class ImageRequester(listeningActivity: Activity) {
         } catch (e: JSONException) {
           isLoadingData = false
           e.printStackTrace()
+          printMessage("================== Was unable to get photo response ==========")
         }
 
       }
